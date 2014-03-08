@@ -21,7 +21,7 @@ return array(
 	'components' => array(  
 		//...
  		'sendgrid' => array(  
- 			'class' => 'ext.yii-sendgrid.YiiSendGrid',  
+ 			'class' => 'ext.yii-sendgrid.YiiSendGrid', //path to YiiSendGrid class  
  			'username'=>'myUsername', //replace with your actual username  
  			'password'=>'myP4s$w0rd', //replace with your actual password  
  			//'viewPath' => 'application.views.mail',  //alias to the layouts path. Optional  
@@ -62,9 +62,10 @@ $message
 	->setHtml(array(  
 		'user'=>$user//my User model. Pass it to the view as $user, same way controller does  
 	));  
-//$message->layout='application.views.layouts.email';  // optionally you can use a layout  
+// optionally you can use a layout  
+//$message->layout='application.views.layouts.email';  
 $message  
-	->setSubject('Welcome to '.Yii::app()->name).'!')  
+	->setSubject('Welcome to '.Yii::app()->name.'!')  
 	->addTo($user->email)  
 	->setFrom(Yii::app()->params['adminEmail']);  
 Yii::app()->sendgrid->send($message);  
@@ -72,4 +73,4 @@ Yii::app()->sendgrid->send($message);
   
 ## Resources  
 
-+[SendGrid php library](https://github.com/sendgrid/sendgrid-php-example)  
++ [SendGrid php library](https://github.com/sendgrid/sendgrid-php-example)  

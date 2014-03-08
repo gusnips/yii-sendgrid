@@ -2,7 +2,7 @@ yii-sendgrid extension
 ============
 
 YiiSendGrid is an application component used for sending email through [sendgrid](http://sendgrid.com).  
-It's a wrapper for [SendGrid php library](https://github.com/sendgrid/sendgrid-php-example)  
+It's a wrapper for [SendGrid php library](https://github.com/sendgrid/sendgrid-php)  
 
 You may configure it as below.  Check the attributes of YiiSendGrid class and YiiSendGridMail class for more options.  
 
@@ -73,4 +73,4 @@ Yii::app()->sendgrid->send($message);
   
 ## Resources  
 
-+ [SendGrid php library](https://github.com/sendgrid/sendgrid-php-example)  
++ [SendGrid php library](https://github.com/sendgrid/sendgrid-php)  

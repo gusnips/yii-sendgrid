@@ -184,7 +184,7 @@ class YiiSendGrid extends CApplicationComponent
 			$mail->setSubject($subject);
 		if($to!==null)
 			$mail->addTo($to);
-		if($$from!==null)
+		if($from!==null)
 			$mail->setFrom($from);
 		return $mail;
 	}
@@ -197,7 +197,7 @@ class YiiSendGrid extends CApplicationComponent
 	{
 		//logs if needed
 		if($this->enableLog)
-			self::log($mail);
+			$this->log($mail);
 		
 		//dry run
 		if($this->dryRun)
@@ -231,10 +231,11 @@ class YiiSendGrid extends CApplicationComponent
 	 * Logs a YiiSendGridMail using Yii::log.
 	 * @return string log message
 	 */
-	protected static function log(YiiSendGridMail $mail)
+	protected function log(YiiSendGridMail $mail)
 	{
-		$tos=implode(', ', array_keys($mail->getTos()));
-		$msg = 'Sending email to '.$tos."\n". implode('', $mail->getHeaders())."\n".$mail->getHtml();
-		Yii::log($msg, CLogger::LEVEL_TRACE, 'ext.sendgrid.YiiSendGrid');
+		$tos=implode(', ', $mail->smtpapi->to);
+		$headers=implode('', $mail->getHeaders());
+		$content=$mail->getHtml();
+		Yii::log("Sending email to {$tos}\n{$headers}\n{$content}", CLogger::LEVEL_TRACE, 'ext.sendgrid.YiiSendGrid');
 	}
 }

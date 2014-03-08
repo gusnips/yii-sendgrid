@@ -1,0 +1,6 @@
+test/coverage/*
+examples/*
+dist/
+composer.lock
+vendor
+.env*

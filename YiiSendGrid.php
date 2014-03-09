@@ -100,6 +100,12 @@ class YiiSendGrid extends CApplicationComponent
 	 * @var boolean
 	 */
 	private static $_registered=false;
+	
+	/**
+	 * list of last error messsages
+	 * @var string[]
+	 */
+	public $lastErrors=array();
 
 	/**
 	 * Calls the {@link registerScripts()} method.
@@ -191,10 +197,12 @@ class YiiSendGrid extends CApplicationComponent
 	
 	/**
 	 * sends the mail and return the result
-	 * @return boolean wheter the mail was sent
+	 * @return boolean wheter it was successful
+	 * if not, you can check the errors in {@link $lastErrors}
 	 */
 	public function send(YiiSendGridMail $mail)
 	{
+		$this->lastErrors=array();
 		//logs if needed
 		if($this->enableLog)
 			$this->log($mail);
@@ -203,7 +211,24 @@ class YiiSendGrid extends CApplicationComponent
 		if($this->dryRun)
 			return true;
 		
-		return $this->getMailer()->send($mail);
+		$result=$this->getMailer()->send($mail);
+		//not a json response, something is wrong. Use it as error
+		if(!$result instanceof stdClass)
+		{
+			$this->lastError=array($result);
+			return false;
+		}
+
+		if(isset($result->message) && $result->message==='success')
+			return true;
+		elseif(isset($result->message)  && $result->message==='error')
+		{
+			$this->lastErrors=$result->errors;
+			return false;
+		}
+			
+		//what happened?
+		return true;
 	}
 	
 	/**

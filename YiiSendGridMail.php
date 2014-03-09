@@ -110,4 +110,60 @@ class YiiSendGridMail extends SendGrid\Email {
 		}
 		return parent::setHtml($html);
 	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \SendGrid\Email::setTos()
+	 */
+	public function setTos($emails)
+	{
+		return $this->setTo($email);
+	}
+	
+	/**
+	 * add a new recipients for the email
+	 * you can use to add one or more
+	 * example:
+	 * <pre>
+	 * 	$mail->setTo(array("john@email.com"=>"John","maria@email.com"));
+	 *  $mail->setTo("joana@email.com","Joana");
+	 * </pre>
+	 * @param string|array $email
+	 * @param string $name
+	 * @return \SendGrid\Email
+	 */
+	public function setTo($email, $name=null)
+	{
+		if(!is_array($email))
+			$email=array($email=>$name);
+		foreach($email as $mail=>$nam)
+		{
+			if(is_int($mail))
+			{
+				$mail=$nam;
+				$nam=null;
+			}
+			parent::addTo($mail,$nam);
+		}
+		return $this;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see YiiSendGridMail::setTo()
+	 */
+	public function addTo($email,$name=null)
+	{
+		return $this->setTo($email,$name);
+	}
+	
+	/**
+	 * Get a list of recipients
+	 * @return array
+	 */
+	public function getTo()
+	{
+		return $this->smtpapi->to;
+	}
+	
 }

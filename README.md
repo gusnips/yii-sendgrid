@@ -68,7 +68,11 @@ $message
 	->setSubject('Welcome to '.Yii::app()->name.'!')  
 	->addTo($user->email)  
 	->setFrom(Yii::app()->params['adminEmail']);  
-Yii::app()->sendgrid->send($message);  
+//handle errors
+if(!Yii::app()->sendgrid->send($message))
+{
+	Yii::log("Failed to send email:\n".print_r(Yii::app()->sendgrid->lastErrors,true),CLogger::LEVEL_ERROR);
+}
 ```  
   
 ## Resources  

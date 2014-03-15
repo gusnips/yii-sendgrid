@@ -115,9 +115,9 @@ class YiiSendGridMail extends SendGrid\Email {
 	 * (non-PHPdoc)
 	 * @see \SendGrid\Email::setTos()
 	 */
-	public function setTos($emails)
+	public function setTos(array $emails)
 	{
-		return $this->setTo($email);
+		return $this->setTo($emails);
 	}
 	
 	/**

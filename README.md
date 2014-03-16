@@ -42,7 +42,7 @@ $message = Yii::app()->sendgrid->createEmail();
 //shortcut to $message=new YiiSendGridMail($viewsPath);
 $message->setHtml('<p>Message content here with HTML</p>')  
 	->setSubject('My Subject')  
-	->addTo('johnDoe@domain.com')  
+	->addTo(array('johnDoe@domain.com'))
 	->setFrom('myemail@mydomain.com');  
 Yii::app()->sendgrid->send($message);  
 ```  
@@ -66,7 +66,7 @@ $message
 //$message->layout='application.views.layouts.email';  
 $message  
 	->setSubject('Welcome to '.Yii::app()->name.'!')  
-	->addTo($user->email)  
+	->addTo(array($user->email))
 	->setFrom(Yii::app()->params['adminEmail']);  
 //handle errors
 if(!Yii::app()->sendgrid->send($message))
